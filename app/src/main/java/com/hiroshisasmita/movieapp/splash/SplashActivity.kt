@@ -1,4 +1,4 @@
-package com.hiroshisasmita.movieapp
+package com.hiroshisasmita.movieapp.splash
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

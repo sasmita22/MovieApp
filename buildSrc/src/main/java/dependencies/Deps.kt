@@ -9,4 +9,8 @@ object Deps {
     object Material {
         const val core = "com.google.android.material:material:1.7.0"
     }
+    object Hilt {
+        const val core = "com.google.dagger:hilt-android:2.44"
+        const val compiler = "com.google.dagger:hilt-android-compiler:2.44"
+    }
 }

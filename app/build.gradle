@@ -5,6 +5,8 @@ import dependencies.ModuleNames
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id "com.google.dagger.hilt.android"
 }
 
 android {
@@ -45,4 +47,11 @@ dependencies {
     implementation Deps.AndroidX.constraintLayout
     implementation Deps.AndroidX.core
     implementation Deps.Material.core
+
+    implementation Deps.Hilt.core
+    kapt Deps.Hilt.compiler
+}
+
+kapt {
+    correctErrorTypes = true
 }
