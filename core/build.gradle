@@ -3,7 +3,7 @@ import dependencies.Config
 import dependencies.ModuleNames
 
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
@@ -11,13 +11,11 @@ android {
     compileSdk Config.androidCompileSdkVersion
 
     defaultConfig {
-        applicationId Config.applicationId
         minSdk Config.androidMinSdkVersion
         targetSdk Config.androidTargetSdkVersion
-        versionCode Config.applicationVersionCode
-        versionName Config.applicationVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -39,10 +37,7 @@ android {
 }
 
 dependencies {
-    implementation project(ModuleNames.Core)
+    implementation project(ModuleNames.Resources)
 
     implementation Deps.AndroidX.appCompat
-    implementation Deps.AndroidX.constraintLayout
-    implementation Deps.AndroidX.core
-    implementation Deps.Material.core
 }
