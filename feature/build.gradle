@@ -5,6 +5,8 @@ import dependencies.ModuleNames
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id "com.google.dagger.hilt.android"
+    id 'kotlin-kapt'
 }
 
 android {
@@ -19,8 +21,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            buildConfigField "String", "BASE_URL", "\"${rootProject.base_url}\""
+            buildConfigField "String", "API_KEY", "\"${rootProject.api_key}\""
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
+            debuggable false
+            buildConfigField "String", "BASE_URL", "\"${rootProject.base_url}\""
+            buildConfigField "String", "API_KEY", "\"${rootProject.api_key}\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,14 +43,39 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
     implementation project(ModuleNames.Core)
+    implementation project(ModuleNames.FeatureBridge)
     implementation project(ModuleNames.Resources)
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.constraintLayout
     implementation Deps.AndroidX.core
     implementation Deps.Material.core
+    implementation Deps.AndroidX.fragment
+
+    implementation Deps.Hilt.core
+    kapt Deps.Hilt.compiler
+
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
+
+    implementation Deps.CircleImageView.core
+
+    implementation Deps.Retrofit.core
+    implementation Deps.Retrofit.gsonConverter
+    implementation Deps.Retrofit.loggingInterceptor
+
+    implementation Deps.Paging3.runtime
+    implementation Deps.Paging3.common
+
+    implementation Deps.Glide.core
+    kapt Deps.Glide.compiler
+
+    implementation Deps.Chucker.core
+
 }

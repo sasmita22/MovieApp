@@ -2,4 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hiroshisasmita.feature">
 
+    <application>
+        <activity
+            android:name=".presentation.detail.MovieDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.movie_list.MovieListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.genre.GenreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+    </application>
+
 </manifest>

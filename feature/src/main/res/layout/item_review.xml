@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_to_windows">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/dummy_profile"
+            app:civ_border_width="0.1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            tools:text="Chris Sawin"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/tvUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProfile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            tools:text="\@ChrisSawin"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProfile"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <TextView
+            android:id="@+id/tvReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="6"
+            tools:text="**My rating: 10/10**\r\nWhy? I rate any movie based on a few things. Warning! Potential Spoilers.\r\n\r\n**1. Story**. Is the story compelling, does it stick in your mind after the movie, haunting you like a ghost, forcing you to think about it and even your own life? Does it have any positive messages aka moral of the story.\r\n\r\nThe story of The Way of Water is indeed compelling. The Conflict is multifaceted. Family conflict, Human-Na'vi conflict, Tribal Conflict and most importantly, personal conflict, aka identity conflict. The identity conflict is mostly fuelled by outcast feeling. There are a lot of people including Jake who at some point feel like they don't belong. I believe most people feel this way at some point in life, you don’t need to be in the protected minority groups for you to feel like an outcast. And while we may not be accepted for who we are, defining who are begins with ourselves first. Our world is full of people who want to be identified in one way or another. But have they identified themselves first? Just remember, most people feel discriminated for one reason or another in life. Religion, gender, skin colour, country, body size or smartness in school, political affiliation. Nobody gets love all round all times. Know who you are and don’t fuss to much about it. Learn a losson from Spider (Miles Socorro).\r\n\r\n**2. Characters**. Are there likeable characters you can get attached to? Characters you remember later, characters that inspire. Characters that grow.\r\nSpidey is a new character, and he has a great story to tell. Jake has changed a lot too and for good reason. People undergo a lot of transformation in life. You can’t be what Don Williams calls a Rake and Ramblin’ Man your entire life. I read an article review complaining how Jake tucked his tail and ran. That review completely missed the point. Jakes decision may not have been the right one, but put in his situation, it is a decision that a lot of people would make. \r\n\r\n**3. Acting**. Is the acting good? Is it realistic enough to be believable to a point you forget the people are just acting? I was more than impressed by Neytiri’s “gone nuts” scene. I felt her pain, and in that instance, I was nuts too. I honestly forgot this was just a movie. Actors can make you cry, and that is just how it should be. You forget that it is just an act, no need to cry. I also read an article that complained about the dialogue of the teenagers. I don’t know what the reviewer expected. Philosophy from teens? Their conversation is believable enough for their age.\r\n\r\n**4. Everything tied together**. A good story told by good and believable characters needs a setup. Something to tie them together into a bundle.  Avatar ties everything together with wonderful visuals. I don’t need to say more."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+        <TextView
+            android:id="@+id/tvPublishedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            tools:text="Commented at : 16 Nov 2022, 16:54"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvReview" />
+
+        <TextView
+            android:id="@+id/tvSeeFull"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="4dp"
+            android:text="See Full Review"
+            android:textColor="@color/design_default_color_primary"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPublishedAt" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
