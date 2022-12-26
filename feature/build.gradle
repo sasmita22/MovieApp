@@ -56,13 +56,14 @@ dependencies {
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.constraintLayout
     implementation Deps.AndroidX.core
+    implementation Deps.AndroidX.swipeRefresh
     implementation Deps.Material.core
     implementation Deps.AndroidX.fragment
 
     implementation Deps.Hilt.core
     kapt Deps.Hilt.compiler
 
-    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
+    implementation Deps.Youtube.core
 
     implementation Deps.CircleImageView.core
 

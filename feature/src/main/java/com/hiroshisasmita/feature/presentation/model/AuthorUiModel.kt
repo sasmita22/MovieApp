@@ -18,13 +18,4 @@ data class AuthorUiModel(
             )
         }
     }
-
-    fun toDomain(): AuthorDomain {
-        return AuthorDomain(
-            name = this.name,
-            username = this.username,
-            avatarPath = this.avatarPath,
-            rating = this.rating
-        )
-    }
 }

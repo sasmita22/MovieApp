@@ -6,6 +6,7 @@ object Deps {
         const val appCompat = "androidx.appcompat:appcompat:1.5.1"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
         const val fragment = "androidx.fragment:fragment-ktx:1.5.5"
+        const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     }
     object Material {
         const val core = "com.google.android.material:material:1.7.0"
@@ -15,7 +16,7 @@ object Deps {
         const val compiler = "com.google.dagger:hilt-android-compiler:2.44"
     }
     object Youtube {
-        const val core = "libs\\YouTubeAndroidPlayerApi.jar"
+        const val core = "com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26"
     }
     object CircleImageView {
         const val core = "de.hdodenhof:circleimageview:3.1.0"

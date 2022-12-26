@@ -30,19 +30,4 @@ data class MovieVideoUiModel(
             )
         }
     }
-
-    fun toDomain(): MovieVideoDomain {
-        return MovieVideoDomain(
-            iso6391 = this.iso6391,
-            iso31661 = this.iso31661,
-            name = this.name,
-            key = this.key,
-            site = this.site,
-            size = this.size,
-            type = this.type,
-            official = this.official,
-            publishedAt = this.publishedAt,
-            id = this.id
-        )
-    }
 }

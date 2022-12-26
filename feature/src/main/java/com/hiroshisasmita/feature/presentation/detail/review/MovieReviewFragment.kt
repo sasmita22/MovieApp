@@ -5,21 +5,28 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+import com.hiroshisasmita.core.extension.extGone
+import com.hiroshisasmita.core.extension.extVisible
 import com.hiroshisasmita.core.functional.DividerItemDecorator
+import com.hiroshisasmita.core.functional.PagingLoadStateAdapter
 import com.hiroshisasmita.core.platform.BaseViewModelFragment
 import com.hiroshisasmita.resources.R
 import com.hiroshisasmita.feature.databinding.FragmentMovieReviewBinding
 import com.hiroshisasmita.feature.presentation.detail.MovieDetailViewModel
 import com.hiroshisasmita.feature.presentation.model.MovieUiModel
 import com.hiroshisasmita.feature.presentation.model.ReviewUiModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class MovieReviewFragment : BaseViewModelFragment<MovieDetailViewModel, FragmentMovieReviewBinding>() {
 
     companion object {
@@ -50,7 +57,59 @@ class MovieReviewFragment : BaseViewModelFragment<MovieDetailViewModel, Fragment
 
     override fun setupViews() = with(binding) {
         setupRecyclerViewDivider()
-        rvReview.adapter = adapter
+        setupPagingStateHandler(adapter)
+        rvReview.adapter = adapter.withLoadStateFooter(
+            PagingLoadStateAdapter() {
+                adapter.retry()
+            }
+        )
+        swipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+            swipeRefresh.isRefreshing = false
+        }
+    }
+
+    private fun setupPagingStateHandler(adapter: ReviewsAdapter) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                adapter.loadStateFlow.collectLatest {
+                    handlePagingState(it)
+                }
+            }
+        }
+    }
+
+    private fun handlePagingState(loadState: CombinedLoadStates) = with(binding) {
+        pbLoading.isVisible = loadState.refresh is LoadState.Loading
+        btRetry.isVisible = loadState.refresh is LoadState.NotLoading && loadState.refresh is LoadState.Error
+        rvReview.isVisible = loadState.refresh !is LoadState.Error
+        tvNoData.isVisible = loadState.refresh is LoadState.NotLoading && adapter.snapshot().isEmpty()
+
+        checkErrorStateRefresh(loadState)
+        checkErrorStateAppend(loadState)
+    }
+
+    private fun checkErrorStateRefresh(loadState: CombinedLoadStates) {
+        if (loadState.refresh !is LoadState.Error) return
+
+        (loadState.source.refresh as? LoadState.Error)?.error?.let { error ->
+            handleErrorApiState(error) {
+                binding.tvNoData.extVisible()
+                binding.btRetry.extGone()
+            }
+        }
+    }
+
+    private fun checkErrorStateAppend(loadState: CombinedLoadStates) {
+        val errorState = loadState.source.append as? LoadState.Error
+            ?: loadState.source.prepend as? LoadState.Error
+            ?: loadState.append as? LoadState.Error
+            ?: loadState.prepend as? LoadState.Error
+            ?: loadState.source.refresh as? LoadState.Error
+
+        errorState?.error?.let { error ->
+            handleErrorApiState(error) { /*Nothing to do here*/ }
+        }
     }
 
     private fun setupRecyclerViewDivider() {
@@ -62,7 +121,7 @@ class MovieReviewFragment : BaseViewModelFragment<MovieDetailViewModel, Fragment
 
     override fun setupObservers() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
                     viewModel.movieItem
                         .collectLatest { movieItem ->
@@ -75,7 +134,7 @@ class MovieReviewFragment : BaseViewModelFragment<MovieDetailViewModel, Fragment
 
     private fun fetchReviews(movieUiModel: MovieUiModel) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
                     viewModel.fetchReviews(movieUiModel.id)
                         .collectLatest {

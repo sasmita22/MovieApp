@@ -13,9 +13,11 @@ import com.hiroshisasmita.core.platform.BaseViewModelFragment
 import com.hiroshisasmita.feature.databinding.FragmentMovieOverviewBinding
 import com.hiroshisasmita.feature.presentation.detail.MovieDetailViewModel
 import com.hiroshisasmita.feature.presentation.model.MovieUiModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MovieOverviewFragment : BaseViewModelFragment<MovieDetailViewModel, FragmentMovieOverviewBinding>() {
 
     companion object {
@@ -48,7 +50,7 @@ class MovieOverviewFragment : BaseViewModelFragment<MovieDetailViewModel, Fragme
         }
     }
 
-    private fun setupMovieData(movieItem: MovieUiModel): Unit = with(binding) {
+    private fun setupMovieData(movieItem: MovieUiModel) = with(binding) {
         tvTitle.text = movieItem.title
         tvRate.text = movieItem.voteAverage.toString()
         tvOverview.text = movieItem.overview

@@ -8,6 +8,7 @@ import com.hiroshisasmita.feature.databinding.ItemGenreBinding
 import com.hiroshisasmita.feature.presentation.model.GenreUiModel
 
 class GenreAdapter(
+    private val onDataChange: (isEmpty: Boolean) -> Unit,
     private val onClickListener: (GenreUiModel) -> Unit
 ): RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
@@ -41,6 +42,7 @@ class GenreAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(data: List<GenreUiModel>) {
         this.data = data
+        onDataChange.invoke(data.isEmpty())
         notifyDataSetChanged()
     }
 }

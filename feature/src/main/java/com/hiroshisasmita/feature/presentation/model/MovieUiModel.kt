@@ -59,25 +59,6 @@ data class MovieUiModel(
         }
     }
 
-    fun toDomain(): MovieDomain {
-        return MovieDomain(
-            posterPath = this.posterPath,
-            adult = this.adult,
-            overview = this.overview,
-            releaseDate = this.releaseDate,
-            genreIds = this.genreIds,
-            id = this.id,
-            originalTitle = this.originalTitle,
-            originalLanguage = this.originalLanguage,
-            title = this.title,
-            backdropPath = this.backdropPath,
-            popularity = this.popularity,
-            voteCount = this.voteCount,
-            video = this.video,
-            voteAverage = this.voteAverage
-        )
-    }
-
     fun toDataIntent(): MovieDataIntent {
         return MovieDataIntent(
             posterPath = this.posterPath,

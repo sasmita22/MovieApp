@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">MovieApp</string>
     <string name="label_review_time">Reviewed at : %s</string>
+    <string name="something_went_wrong_try_again_message">Terjadi kesalahan, silahkan coba beberapa saat lagi</string>
+    <string name="no_internet_error_message">Jaringan tidak stabil, silahkan periksa pengaturan jaringan</string>
+    <string name="unauthorized_message">You are unauthorized, please check the credential for accessing the APIs.</string>
+    <string name="label_ok">OK</string>
+    <string name="no_data_message">There is no data to show</string>
+    <string name="label_retry">Retry</string>
+    <string name="label_release_date">Release Date</string>
+    <string name="label_see_full_review">See Full Review</string>
+    <string name="title_toolbar_genre">Movie Genres</string>
+    <string name="title_toolbar_detail">Movie Detail</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_review">Review</string>
 </resources>

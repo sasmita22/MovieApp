@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.hiroshisasmita.core.exception.NotFoundException
+import com.hiroshisasmita.core.functional.ErrorApiStateHandler
 
 abstract class BaseFragment<BIND: ViewDataBinding>: Fragment() {
 
@@ -25,5 +27,17 @@ abstract class BaseFragment<BIND: ViewDataBinding>: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+    }
+
+    protected fun handleErrorApiState(
+        throwable: Throwable,
+        onDataNotFound: (error: NotFoundException) -> Unit
+    ) {
+        ErrorApiStateHandler.handleErrorState(
+            activity = requireActivity(),
+            lifecycle = lifecycle,
+            throwable = throwable,
+            onDataNotFound = onDataNotFound
+        )
     }
 }

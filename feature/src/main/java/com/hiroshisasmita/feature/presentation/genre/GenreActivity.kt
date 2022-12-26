@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.hiroshisasmita.core.extension.extGone
 import com.hiroshisasmita.core.platform.BaseViewModelActivity
+import com.hiroshisasmita.resources.R
 import com.hiroshisasmita.feature.databinding.ActivityGenreBinding
 import com.hiroshisasmita.feature.presentation.model.GenreUiModel
 import com.hiroshisasmita.feature_bridge.IFeatureNavigation
@@ -35,7 +37,14 @@ class GenreActivity : BaseViewModelActivity<GenreViewModel, ActivityGenreBinding
         get() = ActivityGenreBinding::inflate
 
     private val adapter by lazy {
-        GenreAdapter(onGenreClickItem)
+        GenreAdapter(
+            onDataChange,
+            onGenreClickItem
+        )
+    }
+
+    private val onDataChange = { isEmpty: Boolean ->
+        setIsDataEmpty(isEmpty)
     }
 
     private val onGenreClickItem = { genreItem: GenreUiModel ->
@@ -44,33 +53,51 @@ class GenreActivity : BaseViewModelActivity<GenreViewModel, ActivityGenreBinding
 
     override fun setupViews() = with(binding) {
         include.btBack.extGone()
-        include.tvToolbarTitle.text = "List of Movie Genres"
+        include.tvToolbarTitle.text = getString(R.string.title_toolbar_genre)
 
         rvGenre.adapter = adapter
+
+        swipeRefresh.setOnRefreshListener {
+            viewModel.fetchGenres()
+            swipeRefresh.isRefreshing = false
+        }
+
     }
 
     override val viewModel by viewModels<GenreViewModel>()
 
     override fun setupObservers() {
+        viewModel.fetchGenres()
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
                     viewModel.result
                         .collectLatest { result ->
-                            result.onSuccess {
-                                adapter.updateData(it)
-                            }.onError {
-
+                            result.onSuccess { genreList ->
+                                genreList?.let { adapter.updateData(it) }
+                            }.onError { error ->
+                                handleErrorApiState(error) {
+                                    setIsDataEmpty(isEmpty = true)
+                                }
                             }
                         }
                 }
                 launch {
                     viewModel.loading
                         .collectLatest { isLoading ->
-
+                            setLoading(isLoading)
                         }
                 }
             }
         }
+    }
+
+    private fun setIsDataEmpty(isEmpty: Boolean) = with(binding) {
+        rvGenre.isVisible = !isEmpty
+        tvNoData.isVisible = isEmpty
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        binding.pbLoading.isVisible = isLoading
     }
 }

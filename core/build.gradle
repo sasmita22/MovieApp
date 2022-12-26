@@ -54,4 +54,7 @@ dependencies {
 
     implementation Deps.Glide.core
     kapt Deps.Glide.compiler
+
+    implementation Deps.Paging3.runtime
+    implementation Deps.Paging3.common
 }

@@ -24,16 +24,4 @@ data class ReviewUiModel(
             )
         }
     }
-
-    fun toDomain(): ReviewDomain {
-        return ReviewDomain(
-            author = this.author,
-            authorDetails = this.authorDetails.toDomain(),
-            content = this.content,
-            createdAt = this.createdAt,
-            id = this.id,
-            updatedAt = this.updatedAt,
-            url = this.url
-        )
-    }
 }

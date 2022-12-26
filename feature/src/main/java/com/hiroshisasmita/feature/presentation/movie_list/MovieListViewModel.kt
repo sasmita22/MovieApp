@@ -21,8 +21,8 @@ class MovieListViewModel @Inject constructor(
         return fetchMovieUseCase.execute(FetchMovieUseCase.RequestValues(genreId))
             .result
             .map {
-                it.map {
-                    MovieUiModel.parse(it)
+                it.map { movieDomain ->
+                    MovieUiModel.parse(movieDomain)
                 }
             }
             .cachedIn(viewModelScope)

@@ -14,11 +14,4 @@ data class GenreUiModel(
             )
         }
     }
-
-    fun toDomain(): GenreDomain {
-        return GenreDomain(
-            id = this.id,
-            name = this.name
-        )
-    }
 }

@@ -18,23 +18,21 @@ import javax.inject.Inject
 class GenreViewModel @Inject constructor(
     private val fetchGenresUseCase: FetchGenresUseCase
 ): ViewModel() {
-    private val _result by lazy { MutableStateFlow<ResultState<List<GenreUiModel>>>(ResultState.Success(listOf())) }
-    val result: StateFlow<ResultState<List<GenreUiModel>>> = _result
+    private val _result by lazy { MutableStateFlow<ResultState<List<GenreUiModel>?>>(ResultState.Success(null)) }
+    val result: StateFlow<ResultState<List<GenreUiModel>?>> = _result
 
     private val _loading by lazy { MutableSharedFlow<Boolean>() }
     val loading: SharedFlow<Boolean> = _loading
 
-    init {
-        fetchGenres()
-    }
-
     fun fetchGenres() {
         viewModelScope.launch {
+            _loading.emit(true)
             fetchGenresUseCase.execute(FetchGenresUseCase.RequestValues())
                 .result
                 .map {
                     it.map { genreDomain -> GenreUiModel.parse(genreDomain) }
                 }.let {
+                    _loading.emit(false)
                     _result.value = it
                 }
         }

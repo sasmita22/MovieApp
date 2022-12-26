@@ -9,8 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayoutMediator
-import com.hiroshisasmita.core.extension.extToast
 import com.hiroshisasmita.core.platform.BaseViewModelActivity
+import com.hiroshisasmita.resources.R
 import com.hiroshisasmita.feature.databinding.ActivityMovieDetailBinding
 import com.hiroshisasmita.feature.presentation.model.MovieUiModel
 import com.hiroshisasmita.feature.presentation.model.MovieVideoUiModel
@@ -54,7 +54,7 @@ class MovieDetailActivity : BaseViewModelActivity<MovieDetailViewModel, Activity
 
     override fun setupViews(): Unit = with (binding) {
         include.btBack.setOnClickListener { onBackPressed() }
-        include.tvToolbarTitle.text = "Movie Detail"
+        include.tvToolbarTitle.text = getString(R.string.title_toolbar_detail)
         setupViewPager(this)
         lifecycle.addObserver(youtubePlayer)
 
@@ -69,21 +69,21 @@ class MovieDetailActivity : BaseViewModelActivity<MovieDetailViewModel, Activity
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Overview"
-                else -> tab.text = "Review"
+                0 -> tab.text = getString(R.string.title_overview)
+                else -> tab.text = getString(R.string.title_review)
             }
         }.attach()
     }
 
     override fun setupObservers() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.videoResult
                     .collectLatest { result ->
                         result.onSuccess { movieVideo ->
                             movieVideo?.let { setupVideo(it)  }
-                        }.onError {
-                            extToast(it.message.orEmpty())
+                        }.onError { error ->
+                            handleErrorApiState(error) { /*Nothing to do here*/ }
                         }
                     }
             }

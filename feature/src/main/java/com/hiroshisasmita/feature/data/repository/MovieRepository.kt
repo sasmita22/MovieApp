@@ -33,7 +33,7 @@ class MovieRepository(
     override fun getMovies(genreId: Int): Flow<PagingData<MovieDomain>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 10,
+                pageSize = 1,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
@@ -57,7 +57,7 @@ class MovieRepository(
     override fun getReviews(movieId: Int): Flow<PagingData<ReviewDomain>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 10,
+                pageSize = 1,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
