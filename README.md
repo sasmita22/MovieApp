@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <img src="resource/src/main/res/drawable/tmdb_logo.jpeg" alt="Logo" width="80" height="80">
-  <h3 align="center">News App</h3>
+  <h3 align="center">Movie App</h3>
   <br/>
   <p align="center">
     <img src="https://img.shields.io/badge/Language-Kotlin-brightgreen">
